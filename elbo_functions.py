@@ -28,7 +28,7 @@ def KL_closed(covar_module, train_x, likelihoods, data, mu, log_var):
                                          dtype=torch.double).to(device), LK1).to(device)
     logdet11 = 2 * torch.sum(torch.log(torch.diag(LK1))).to(device)
     qf1 = torch.sum(mu1 * torch.matmul(iK1, mu1)).to(device)
-    tr1 = torch.sum(v1 * torch.diag(iK1)).to(device)
+    tr1 = torch.sum(v1 * torch.diag(iK1)).to(device) # sum up the diagonal values of the sigma matrices, 
     logdet10 = log_var.sum().to(device)
     kld1 = 0.5 * (tr1 + qf1 - data.shape[0] + logdet11 - logdet10)
     return kld1
